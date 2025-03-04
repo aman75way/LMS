@@ -32,8 +32,8 @@ This is a **full-stack** LMS application similar to Udemy, built with **Node.js,
 ### **Backend**
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-repo/lms-api.git
-   cd lms-api
+   git clone https://github.com/aman75way/LMS
+   cd LMS
    ```
 2. Install dependencies:
    ```sh
@@ -108,9 +108,5 @@ lms-api/
 │   ├── index.tsx
 ```
 
-## Contributors
-- **Your Name** - [GitHub](https://github.com/your-profile)
-
-## License
-This project is licensed under the MIT License.
+[GitHub](https://github.com/aman75way/LMS)
 
