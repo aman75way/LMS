@@ -1,0 +1,847 @@
+{
+	"info": {
+		"_postman_id": "6640925a-d854-4b8c-93e6-a4049af22f78",
+		"name": "LMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42107986"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "CREATE - USER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"fullName\": \"Alice Smit\",\r\n        \"email\": \"alice@example.com\",\r\n        \"role\": \"INSTRUCTOR\",\r\n        \"password\": \"123123\",\r\n        \"confirmPassword\": \"123123\"\r\n      }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN - USER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    // {\r\n    //     \"email\": \"alice@example.com\",\r\n    //     \"password\": \"123123\"\r\n    //   }\r\n\r\n{\r\n    \"email\": \"johnd@example.com\",\r\n    \"password\": \"123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGGED in user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VkNjAzZzAwMDB1b3A3b2psNG91eDMiLCJpYXQiOjE3NDEwOTA4MDgsImV4cCI6MTc0MTA5MTcwOH0._-mKfqhUsqtBrVWMgdooT8Lv2kUafsOGfbFMjhYDiiw",
+								"description": "ACCESS TOKEN",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VkNjAzZzAwMDB1b3A3b2psNG91eDMiLCJpYXQiOjE3NDEwODYyNjIsImV4cCI6MTc0MTY5MTA2Mn0.xWv7KJSztspXSc-zxaQ41NVk5cBuCht-G6o972YC6NE",
+								"description": "REFRESH TOKEN\n",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"fullName\": \"John Doe\",\r\n        \"email\": \"johnd@example.com\",\r\n        \"role\": \"STUDENT\",\r\n        \"password\": \"123123\",\r\n        \"confirmPassword\": \"123123\"\r\n      }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VkNjAzZzAwMDB1b3A3b2psNG91eDMiLCJpYXQiOjE3NDEwOTA4MDgsImV4cCI6MTc0MTA5MTcwOH0._-mKfqhUsqtBrVWMgdooT8Lv2kUafsOGfbFMjhYDiiw",
+								"description": "ACCESS TOKEN",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VkNjAzZzAwMDB1b3A3b2psNG91eDMiLCJpYXQiOjE3NDEwOTA4MDgsImV4cCI6MTc0MTY5NTYwOH0.KZBz7lfNX2bzFcIyp5r2YWFl_exvhuLuMjkegrTvj2s",
+								"description": "REFRESH TOKEN",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"fullName\": \"John Doe\",\r\n        \"email\": \"johnd@example.com\",\r\n        \"role\": \"STUDENT\",\r\n        \"password\": \"123123\",\r\n        \"confirmPassword\": \"123123\"\r\n      }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/refresh-token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "COURSE",
+			"item": [
+				{
+					"name": "GET - ALL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/courses/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"courses",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - 1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/courses/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"courses",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "cm7uep5460004uo148qwyzep4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE - Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VlbnhsNzAwMDB1bzE0dzIxemxseXgiLCJpYXQiOjE3NDEwODc3MDIsImV4cCI6MTc0MTA4ODYwMn0.XOqOFhYax5OB2ApuO7Pbrgz80jNaPYRv5X-9GdafrKc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\r\n//     \"title\": \"Mastering JavaScript\",\r\n//     \"description\": \"A complete JavaScript course covering ES6+ concepts.\",\r\n//     \"price\": 49.99,\r\n//     \"category\": \"Programming\"\r\n// }\r\n\r\n// {\r\n//     \"title\": \"Advanced Python\",\r\n//     \"description\": \"Learn Python for data science and machine learning.\",\r\n//     \"price\": 39.99,\r\n//     \"category\": \"Data Science\"\r\n//   }\r\n\r\n{\r\n    \"title\": \"Graphic Design with Photoshop\",\r\n    \"description\": \"Master Photoshop tools and techniques for stunning designs.\",\r\n    \"price\": 29.99,\r\n    \"category\": \"Design\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/courses/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"courses",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - Course",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VlbnhsNzAwMDB1bzE0dzIxemxseXgiLCJpYXQiOjE3NDEwODc3MDIsImV4cCI6MTc0MTA4ODYwMn0.XOqOFhYax5OB2ApuO7Pbrgz80jNaPYRv5X-9GdafrKc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/courses/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"courses",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "cm7uerfia0006uo14ghqaiqsv"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LECTURES",
+			"item": [
+				{
+					"name": "GET - By Course",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VkNjAzZzAwMDB1b3A3b2psNG91eDMiLCJpYXQiOjE3NDEwODc0NDYsImV4cCI6MTc0MTA4ODM0Nn0.isYmzwTEnAXmY1JYT4SN40sjFhV1ZZnBRNGNVmQinQ0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Mastering JavaScript\",\r\n    \"description\": \"A complete JavaScript course covering ES6+ concepts.\",\r\n    \"price\": 49.99,\r\n    \"category\": \"Programming\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lectures/:courseID",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lectures",
+								":courseID"
+							],
+							"variable": [
+								{
+									"key": "courseID",
+									"value": "cm7uep5460004uo148qwyzep4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Single Lecture",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VkNjAzZzAwMDB1b3A3b2psNG91eDMiLCJpYXQiOjE3NDEwODc0NDYsImV4cCI6MTc0MTA4ODM0Nn0.isYmzwTEnAXmY1JYT4SN40sjFhV1ZZnBRNGNVmQinQ0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Mastering JavaScript\",\r\n    \"description\": \"A complete JavaScript course covering ES6+ concepts.\",\r\n    \"price\": 49.99,\r\n    \"category\": \"Programming\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lectures/single/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lectures",
+								"single",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "cm7uf91nc0001uoajss1nk9ja"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE - Lecture / Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VlbnhsNzAwMDB1bzE0dzIxemxseXgiLCJpYXQiOjE3NDEwODg2MjcsImV4cCI6MTc0MTA4OTUyN30.l5qZx4GjO1wiuI5PX9eVIj4TpCK2VL6lq9TN0dR_zqs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseId\": \"cm7uep5460004uo148qwyzep4\",\r\n    \"title\": \"Introduction to Python - PART 3\",\r\n    \"contentUrl\": \"https://example.com/intro-to-js.mp4\",\r\n    \"duration\": 45\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lectures/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lectures",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE - Lecture / Course Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VlbnhsNzAwMDB1bzE0dzIxemxseXgiLCJpYXQiOjE3NDEwODg2MjcsImV4cCI6MTc0MTA4OTUyN30.l5qZx4GjO1wiuI5PX9eVIj4TpCK2VL6lq9TN0dR_zqs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseId\": \"cm7uep5460004uo148qwyzep4\",\r\n    \"title\": \"Introduction to Python - PART 2\",\r\n    \"contentUrl\": \"https://example.com/intro-to-js.mp4\",\r\n    \"duration\": 45\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lectures/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lectures",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "cm7ufbbh20005uoaj6euu3md3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PROGRESS",
+			"item": [
+				{
+					"name": "GET - Progress / Course",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VlbnhsNzAwMDB1bzE0dzIxemxseXgiLCJpYXQiOjE3NDEwODg2MjcsImV4cCI6MTc0MTA4OTUyN30.l5qZx4GjO1wiuI5PX9eVIj4TpCK2VL6lq9TN0dR_zqs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseId\": \"cm7uep5460004uo148qwyzep4\",\r\n    \"title\": \"Introduction to Python - PART 3\",\r\n    \"contentUrl\": \"https://example.com/intro-to-js.mp4\",\r\n    \"duration\": 45\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/progress/:couseID",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"progress",
+								":couseID"
+							],
+							"variable": [
+								{
+									"key": "couseID",
+									"value": "cm7uep5460004uo148qwyzep4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Progress / Course COMPLETION Percentage",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VlbnhsNzAwMDB1bzE0dzIxemxseXgiLCJpYXQiOjE3NDEwODg2MjcsImV4cCI6MTc0MTA4OTUyN30.l5qZx4GjO1wiuI5PX9eVIj4TpCK2VL6lq9TN0dR_zqs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseId\": \"cm7uep5460004uo148qwyzep4\",\r\n    \"title\": \"Introduction to Python - PART 3\",\r\n    \"contentUrl\": \"https://example.com/intro-to-js.mp4\",\r\n    \"duration\": 45\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/progress/:couseID/completion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"progress",
+								":couseID",
+								"completion"
+							],
+							"variable": [
+								{
+									"key": "couseID",
+									"value": "cm7uep5460004uo148qwyzep4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE - Progress in a Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VlbnhsNzAwMDB1bzE0dzIxemxseXgiLCJpYXQiOjE3NDEwODg2MjcsImV4cCI6MTc0MTA4OTUyN30.l5qZx4GjO1wiuI5PX9eVIj4TpCK2VL6lq9TN0dR_zqs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseId\": \"cm7uep5460004uo148qwyzep4\",\r\n    \"lectureId\": \"cm7uf99lp0003uoajy9zzcbf5\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/progress/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"progress",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ENROLLMENT",
+			"item": [
+				{
+					"name": "ENROLL - USER",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VkNjAzZzAwMDB1b3A3b2psNG91eDMiLCJpYXQiOjE3NDEwODk3OTcsImV4cCI6MTc0MTA5MDY5N30.PL0HFSeRt24qJmHXuJwPXo1wF5JOydkKDavon4krG8k",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"courseId\": \"cm7uep5460004uo148qwyzep4\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/enrollments/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"enrollments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - USER ENROLLMENTS",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VkNjAzZzAwMDB1b3A3b2psNG91eDMiLCJpYXQiOjE3NDEwODk3OTcsImV4cCI6MTc0MTA5MDY5N30.PL0HFSeRt24qJmHXuJwPXo1wF5JOydkKDavon4krG8k",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"courseId\": \"cm7uep5460004uo148qwyzep4\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/enrollments/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"enrollments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - COURSE ENROLLMENTS",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VkNjAzZzAwMDB1b3A3b2psNG91eDMiLCJpYXQiOjE3NDEwODk3OTcsImV4cCI6MTc0MTA5MDY5N30.PL0HFSeRt24qJmHXuJwPXo1wF5JOydkKDavon4krG8k",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"courseId\": \"cm7uep5460004uo148qwyzep4\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/enrollments/:courseID",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"enrollments",
+								":courseID"
+							],
+							"variable": [
+								{
+									"key": "courseID",
+									"value": "cm7uep5460004uo148qwyzep4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PURCHASE",
+			"item": [
+				{
+					"name": "PAY - USER",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VkNjAzZzAwMDB1b3A3b2psNG91eDMiLCJpYXQiOjE3NDEwOTA4MDgsImV4cCI6MTc0MTA5MTcwOH0._-mKfqhUsqtBrVWMgdooT8Lv2kUafsOGfbFMjhYDiiw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"courseId\": \"cm7uep5460004uo148qwyzep4\",\r\n  \"amount\": 39.99\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/purchases/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"purchases",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - USER Purchase",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VkNjAzZzAwMDB1b3A3b2psNG91eDMiLCJpYXQiOjE3NDEwOTA4MDgsImV4cCI6MTc0MTA5MTcwOH0._-mKfqhUsqtBrVWMgdooT8Lv2kUafsOGfbFMjhYDiiw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n\r\n\r\n{\r\n  \"courseId\": \"cm7uep5460004uo148qwyzep4\",\r\n  \"amount\": 49.99\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/purchases/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"purchases",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - PURCHASE",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtN3VkNjAzZzAwMDB1b3A3b2psNG91eDMiLCJpYXQiOjE3NDEwOTA4MDgsImV4cCI6MTc0MTA5MTcwOH0._-mKfqhUsqtBrVWMgdooT8Lv2kUafsOGfbFMjhYDiiw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n\r\n\r\n{\r\n  \"courseId\": \"cm7uep5460004uo148qwyzep4\",\r\n  \"amount\": 49.99\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/purchases/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"purchases",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

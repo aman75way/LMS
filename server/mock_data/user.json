@@ -1,0 +1,24 @@
+[
+    {
+        "fullName": "John Doe",
+        "email": "johndoe@example.com",
+        "role": "STUDENT",
+        "password": "password123",
+        "confirmPassword": "password123"
+      },
+      {
+        "fullName": "Alice Smith",
+        "email": "alice@example.com",
+        "role": "INSTRUCTOR",
+        "password": "securePass456",
+        "confirmPassword": "securePass456"
+      },
+      {
+        "fullName": "Admin User",
+        "email": "admin@example.com",
+        "role": "ADMIN",
+        "password": "adminPass789",
+        "confirmPassword": "adminPass789"
+      }
+      
+]

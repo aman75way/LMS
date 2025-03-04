@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Mastering JavaScript",
+    "description": "A complete JavaScript course covering ES6+ concepts.",
+    "price": 49.99,
+    "category": "Programming"
+  },
+  {
+    "title": "Advanced Python",
+    "description": "Learn Python for data science and machine learning.",
+    "price": 39.99,
+    "category": "Data Science"
+  },
+  {
+    "title": "Graphic Design with Photoshop",
+    "description": "Master Photoshop tools and techniques for stunning designs.",
+    "price": 29.99,
+    "category": "Design"
+  }
+]

@@ -1,0 +1,80 @@
+lms-backend/
+├── app/                        # Main source files
+│   ├── common/                 # Shared utilities and DTOs
+│   │   ├── dto/
+│   │   │   ├── base.dto.ts
+│   │   ├── helper/
+│   │   │   ├── config.helper.ts
+│   │   │   ├── response.helper.ts
+│   │   ├── middlewares/
+│   │   │   ├── catch-error.middleware.ts
+│   │   │   ├── error-handler.middleware.ts
+│   │   │   ├── role-auth.middleware.ts
+│   ├── services/                # Core business logic services
+│   │   ├── database.service.ts
+│   │   ├── email.service.ts
+│   │   ├── passport-jwt.service.ts
+│   ├── controllers/             # Route controllers
+│   │   ├── user/
+│   │   │   ├── user.controller.ts
+│   │   │   ├── user.dto.ts
+│   │   │   ├── user.route.ts
+│   │   │   ├── user.schema.ts
+│   │   │   ├── user.service.ts
+│   │   │   ├── user.validation.ts
+│   │   ├── course/
+│   │   │   ├── course.controller.ts
+│   │   │   ├── course.dto.ts
+│   │   │   ├── course.route.ts
+│   │   │   ├── course.schema.ts
+│   │   │   ├── course.service.ts
+│   │   │   ├── course.validation.ts
+│   │   ├── enrollment/
+│   │   │   ├── enrollment.controller.ts
+│   │   │   ├── enrollment.dto.ts
+│   │   │   ├── enrollment.route.ts
+│   │   │   ├── enrollment.schema.ts
+│   │   │   ├── enrollment.service.ts
+│   │   │   ├── enrollment.validation.ts
+│   │   ├── lecture/
+│   │   │   ├── lecture.controller.ts
+│   │   │   ├── lecture.dto.ts
+│   │   │   ├── lecture.route.ts
+│   │   │   ├── lecture.schema.ts
+│   │   │   ├── lecture.service.ts
+│   │   │   ├── lecture.validation.ts
+│   │   ├── progress/
+│   │   │   ├── progress.controller.ts
+│   │   │   ├── progress.dto.ts
+│   │   │   ├── progress.route.ts
+│   │   │   ├── progress.schema.ts
+│   │   │   ├── progress.service.ts
+│   │   │   ├── progress.validation.ts
+│   │   ├── purchase/
+│   │   │   ├── purchase.controller.ts
+│   │   │   ├── purchase.dto.ts
+│   │   │   ├── purchase.route.ts
+│   │   │   ├── purchase.schema.ts
+│   │   │   ├── purchase.service.ts
+│   │   │   ├── purchase.validation.ts
+│   ├── routes/                   # Main route file
+│   │   ├── route.ts
+│   ├── utils/                     # General utility functions
+│   │   ├── jwt.util.ts
+│   │   ├── bcrypt.util.ts
+│   ├── config/                     # Configuration files
+│   │   ├── config.ts
+│   │   ├── env.ts
+│   ├── types/                      # TypeScript types
+│   │   ├── express.d.ts
+│   │   ├── index.d.ts
+├── prisma/                         # Prisma database schema and migrations
+│   ├── schema.prisma
+│   ├── migrations/
+├── index.ts                         # Main server entry point
+├── docker-compose.yml               # Docker for PostgreSQL
+├── tsconfig.json                     # TypeScript configuration
+├── package.json                      # Dependencies and scripts
+├── .env                              # Environment variables
+├── .gitignore                        # Ignored files
+├── README.md                         # Project documentation

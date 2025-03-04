@@ -1,0 +1,17 @@
+# version: "3.4"
+
+services:
+  postgres:
+    container_name: lms-test
+    image: postgres
+    ports:
+      - 5430:5432
+    volumes:
+      - postgres_data_lms:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: lms
+      POSTGRES_PASSWORD: admin
+
+volumes:
+  postgres_data_lms:

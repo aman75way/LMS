@@ -1,0 +1,20 @@
+[
+  {
+    "courseId": "1a2b3c",
+    "title": "Introduction to JavaScript",
+    "contentUrl": "https://example.com/intro-to-js.mp4",
+    "duration": 45
+  },
+  {
+    "courseId": "4d5e6f",
+    "title": "Python for Data Science - Basics",
+    "contentUrl": "https://example.com/python-basics.mp4",
+    "duration": 60
+  },
+  {
+    "courseId": "7g8h9i",
+    "title": "Photoshop Layers & Masks",
+    "contentUrl": "https://example.com/photoshop-layers.mp4",
+    "duration": 30
+  }
+]

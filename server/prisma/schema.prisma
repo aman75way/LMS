@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "../ER-Diagram.png"
+}
+
+model User {
+  id             String     @id @default(cuid())
+  email          String     @unique
+  fullName       String
+  password       String
+  role           Role
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  refreshToken   String?    
+
+  // Relationships
+  enrollments    Enrollment[] @relation("UserEnrollments") 
+  createdCourses Course[]   @relation("InstructorCourses") 
+  progress       Progress[] @relation("UserProgress") 
+  purchases      Purchase[] @relation("UserPurchases") 
+}
+
+model Course {
+  id            String       @id @default(cuid())
+  title         String
+  description   String
+  price         Float
+  category      String       
+  instructorId  String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  instructor    User          @relation("InstructorCourses", fields: [instructorId], references: [id])
+  lectures      Lecture[]     @relation("CourseLectures")
+  enrollments   Enrollment[]  @relation("CourseEnrollments")
+  progress      Progress[]    @relation("CourseProgress") 
+  purchases     Purchase[]    @relation("CoursePurchases")
+}
+
+model Enrollment {
+  id       String   @id @default(cuid())
+  userId   String
+  courseId String
+  progress Float    @default(0.0)
+  createdAt DateTime @default(now())
+
+  user   User   @relation("UserEnrollments", fields: [userId], references: [id])
+  course Course @relation("CourseEnrollments", fields: [courseId], references: [id])
+
+  @@unique([userId, courseId])
+}
+
+model Lecture {
+  id         String   @id @default(cuid())
+  title      String
+  contentUrl String
+  duration   Int
+  courseId   String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  course     Course  @relation("CourseLectures", fields: [courseId], references: [id])
+  progress   Progress[] @relation("LectureProgress")
+}
+
+model Progress {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  lectureId String
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user      User     @relation("UserProgress", fields: [userId], references: [id])
+  course    Course   @relation("CourseProgress", fields: [courseId], references: [id])
+  lecture   Lecture  @relation("LectureProgress", fields: [lectureId], references: [id])
+
+  @@unique([userId, lectureId])
+}
+
+model Purchase {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  amount    Float
+  createdAt DateTime @default(now())
+
+  user      User   @relation("UserPurchases", fields: [userId], references: [id])
+  course    Course @relation("CoursePurchases", fields: [courseId], references: [id])
+  @@unique([userId, courseId])
+}
+
+enum Role {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+}

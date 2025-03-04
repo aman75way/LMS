@@ -1,0 +1,14 @@
+[
+  {
+    "courseId": "1a2b3c",
+    "lectureId": "l1"
+  },
+  {
+    "courseId": "4d5e6f",
+    "lectureId": "l2"
+  },
+  {
+    "courseId": "7g8h9i",
+    "lectureId": "l3"
+  }
+]
