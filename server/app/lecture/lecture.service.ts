@@ -4,17 +4,31 @@ import { LectureDTO } from "./lecture.dto";
 /**
  * Creates a new lecture for a course.
  */
+
+/**
+ * Creates a new lecture for a course.
+ * @param instructorId - ID of the instructor
+ * @param courseId - ID of the course
+ * @param title - Lecture title
+ * @param file - Uploaded lecture video file
+ * @param duration - Duration of the lecture (in minutes)
+ */
 export const createLectureService = async (
   instructorId: string,
   courseId: string,
   title: string,
-  contentUrl: string,
+  file: Express.Multer.File | undefined,
   duration: number
 ): Promise<LectureDTO> => {
   const course = await prisma.course.findUnique({ where: { id: courseId } });
 
   if (!course) throw new Error("Course not found");
   if (course.instructorId !== instructorId) throw new Error("Unauthorized to add lectures to this course");
+
+  if (!file) throw new Error("Lecture video file is required");
+
+  // Construct the video file path
+  const contentUrl = `/uploads/lectures/${file.filename}`;
 
   const lecture = await prisma.lecture.create({
     data: { title, contentUrl, duration, courseId },

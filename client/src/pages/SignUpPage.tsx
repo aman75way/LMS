@@ -15,12 +15,12 @@ import Lottie from "lottie-react";
 import signupAnimation from "../../public/login.json";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { signUpStart, signUpUser, signUpEnd } from "../store/slices/authSlice";
-import { signUp } from "../services/authService";
+import { signup } from "../store/slices/authSlice";
+import { AppDispatch } from "../store/store";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>(); // ✅ Properly typed dispatch
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,7 +31,7 @@ const SignUp = () => {
 
   const handleTogglePassword = () => setShowPassword(!showPassword);
 
-  const handleSignUp = async (event: any) => {
+  const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
@@ -39,20 +39,18 @@ const SignUp = () => {
       return;
     }
 
-    dispatch(signUpStart());
-
     try {
-      const response = await signUp(fullName, email, password, role);
-
-      // Save user to Redux store
-      dispatch(signUpUser(response.user));
-
+      const resultAction = await dispatch(signup({
+        fullName,
+        email,
+        password,
+        confirmPassword,
+        role,
+      }));
       toast.success("Account created successfully!");
       navigate("/");
-    } catch (error : any) {
-      toast.error(error.message);
-    } finally {
-      dispatch(signUpEnd());
+    } catch (error) {
+      toast.error(error as string || "Signup failed");
     }
   };
 
@@ -114,103 +112,59 @@ const SignUp = () => {
             Sign Up
           </legend>
 
-          <motion.div initial={{ x: 30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.2, duration: 0.5 }} style={{ width: "100%" }}>
-            <TextField
-              label="Full Name"
-              type="text"
-              fullWidth
-              variant="outlined"
-              sx={{ marginBottom: 3 }}
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
-          </motion.div>
+          <TextField label="Full Name" type="text" fullWidth variant="outlined" sx={{ marginBottom: 3 }} value={fullName} onChange={(e) => setFullName(e.target.value)} />
+          <TextField label="Email" type="email" fullWidth variant="outlined" sx={{ marginBottom: 3 }} value={email} onChange={(e) => setEmail(e.target.value)} />
 
-          <motion.div initial={{ x: 30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }} style={{ width: "100%" }}>
-            <TextField
-              label="Email"
-              type="email"
-              fullWidth
-              variant="outlined"
-              sx={{ marginBottom: 3 }}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </motion.div>
+          <TextField select label="Role" fullWidth variant="outlined" sx={{ marginBottom: 3 }} value={role} onChange={(e) => setRole(e.target.value as "STUDENT" | "INSTRUCTOR")}>
+            <MenuItem value="STUDENT">Student</MenuItem>
+            <MenuItem value="INSTRUCTOR">Instructor</MenuItem>
+          </TextField>
 
-          <motion.div initial={{ x: 30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.4, duration: 0.5 }} style={{ width: "100%" }}>
-            <TextField
-              select
-              label="Role"
-              fullWidth
-              variant="outlined"
-              sx={{ marginBottom: 3 }}
-              value={role}
-              onChange={(e) => setRole(e.target.value as "STUDENT" | "INSTRUCTOR")}
-            >
-              <MenuItem value="STUDENT">Student</MenuItem>
-              <MenuItem value="INSTRUCTOR">Instructor</MenuItem>
-            </TextField>
-          </motion.div>
+          <TextField
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            fullWidth
+            variant="outlined"
+            sx={{ marginBottom: 3 }}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleTogglePassword}>
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
 
-          <motion.div initial={{ x: 30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.5, duration: 0.5 }} style={{ width: "100%" }}>
-            <TextField
-              label="Password"
-              type={showPassword ? "text" : "password"}
-              fullWidth
-              variant="outlined"
-              sx={{ marginBottom: 3 }}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={handleTogglePassword}>
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </motion.div>
+          <TextField
+            label="Confirm Password"
+            type={showPassword ? "text" : "password"}
+            fullWidth
+            variant="outlined"
+            sx={{ marginBottom: 3 }}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleTogglePassword}>
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
 
-          <motion.div initial={{ x: 30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.6, duration: 0.5 }} style={{ width: "100%" }}>
-            <TextField
-              label="Confirm Password"
-              type={showPassword ? "text" : "password"}
-              fullWidth
-              variant="outlined"
-              sx={{ marginBottom: 3 }}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={handleTogglePassword}>
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </motion.div>
+          <Typography variant="body2" sx={{ textAlign: "center", cursor: "pointer", color: "#1976d2", marginBottom: 3, "&:hover": { textDecoration: "underline" } }} onClick={() => navigate("/login")}>
+            Already have an account? Log in here
+          </Typography>
 
-          {/* Login Link */}
-          <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.7, duration: 0.5 }}>
-            <Typography
-              variant="body2"
-              sx={{ textAlign: "center", cursor: "pointer", color: "#1976d2", marginBottom: 3, "&:hover": { textDecoration: "underline" } }}
-              onClick={() => navigate("/login")}
-            >
-              Already have an account? Log in here
-            </Typography>
-          </motion.div>
-
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.8, duration: 0.5 }} style={{ width: "100%" }}>
-            <Button variant="contained" fullWidth onClick={handleSignUp} sx={{ backgroundColor: "black", color: "white", padding: "14px", fontSize: "18px", fontWeight: "bold", borderRadius: "10px", "&:hover": { backgroundColor: "#333" } }}>
-              Sign Up
-            </Button>
-          </motion.div>
+          <Button variant="contained" fullWidth onClick={handleSignUp} sx={{ backgroundColor: "black", color: "white", padding: "14px", fontSize: "18px", fontWeight: "bold", borderRadius: "10px", "&:hover": { backgroundColor: "#333" } }}>
+            Sign Up
+          </Button>
         </motion.fieldset>
       </Box>
     </motion.div>

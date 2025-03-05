@@ -22,6 +22,7 @@ const HomePage = () => {
 
   const user = useSelector((state: RootState) => state.auth.user);
   const courses = useSelector((state: RootState) => state.courses.courses);
+  
   const [filteredCourses, setFilteredCourses] = useState(courses);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);

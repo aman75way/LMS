@@ -48,6 +48,7 @@ export const signupService = async (
     },
   });
 
+
   await generateTokens(newUser.id, res);
 
   return {
@@ -57,13 +58,15 @@ export const signupService = async (
     role: newUser.role,
     createdAt: newUser.createdAt.toISOString(),
     updatedAt: newUser.updatedAt.toISOString(),
+    accessToken: res.locals.accessToken,
+    refreshToken: res.locals.refreshToken,
   };
 };
 
 /**
  * Authenticates a user using email and password.
  */
-export const loginService = async (email: string, password: string, res: any): Promise<UserDTO> => {
+export const loginService = async (email: string, password: string, res: any): Promise<Omit<UserDTO, "accessToken" | "refreshToken">> => {
   const user = await prisma.user.findUnique({ where: { email } });
 
   if (!user || !(await bcryptjs.compare(password, user.password))) {
@@ -99,7 +102,7 @@ export const logoutService = async (userId: string, res: any) => {
 /**
  * Retrieves a user's details.
  */
-export const getUserService = async (userId: string): Promise<UserDTO> => {
+export const getUserService = async (userId: string): Promise<Omit<UserDTO, "accessToken" | "refreshToken">> => {
   const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (!user) {

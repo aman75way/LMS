@@ -17,6 +17,11 @@ interface User {
   updatedAt: string;
 }
 
+interface AuthState {
+  user: UpdateUser | null;
+  isLoading : boolean;
+}
+
 interface UpdateUser {
   id: string;
   fullName: string;
@@ -24,9 +29,14 @@ interface UpdateUser {
   role: "STUDENT" | "INSTRUCTOR" | "ADMIN";
 }
 
-interface AuthState {
-  user: UpdateUser | null;
-  isLoading: boolean;
+interface SignupData {
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  role: "STUDENT" | "INSTRUCTOR" | "ADMIN";
+  accessToken: string;
+  refreshToken: string;
 }
 
 // ---------------- Course Interfaces ----------------

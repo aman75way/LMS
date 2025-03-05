@@ -39,19 +39,15 @@ This is a **full-stack** LMS application similar to Udemy, built with **Node.js,
    ```sh
    npm install
    ```
-3. Configure environment variables:
-   ```sh
-   cp .env.example .env
-   ```
-4. Start PostgreSQL using Docker:
+3. Start PostgreSQL using Docker:
    ```sh
    docker-compose up -d
    ```
-5. Apply database migrations:
+4. Apply database migrations:
    ```sh
    npx prisma migrate dev --name init
    ```
-6. Start the backend server:
+5. Start the backend server:
    ```sh
    npm run dev
    ```

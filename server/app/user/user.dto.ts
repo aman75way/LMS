@@ -8,4 +8,6 @@ export interface UserDTO {
   role: Role;
   createdAt: string;
   updatedAt: string;
+  accessToken: string;
+  refreshToken: string;
 }

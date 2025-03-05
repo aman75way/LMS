@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
-import { Box, Typography, List, ListItem, ListItemText, LinearProgress, Button, Divider } from "@mui/material";
+import { 
+  Box, Typography, List, ListItem, ListItemText, 
+  LinearProgress, Button, Divider 
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserEnrollments } from "../store/slices/enrollmentSlice";
-import { getUserProgress } from "../store/slices/progressSlice";
+import { getProgressCourse } from "../store/slices/progressSlice";
 import { AppDispatch, RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
 
@@ -16,8 +19,15 @@ const EnrollmentsPage: React.FC = () => {
 
   useEffect(() => {
     dispatch(getUserEnrollments());
-    dispatch(getUserProgress());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (enrollments.length > 0) {
+      enrollments.forEach((enrollment) => {
+        dispatch(getProgressCourse(enrollment.courseId));
+      });
+    }
+  }, [dispatch, enrollments]);
 
   return (
     <Box sx={{ p: 4, maxWidth: "900px", mx: "auto", textAlign: "center" }}>
@@ -32,11 +42,14 @@ const EnrollmentsPage: React.FC = () => {
       ) : (
         <List>
           {enrollments.map((enrollment) => {
-            const progress = progressData.find((p) => p.courseId === enrollment.courseId)?.progress || 0;
+            const progress = progressData.find((p) => p.courseId === enrollment.courseId)?.watchedDuration || 0;
             return (
               <React.Fragment key={enrollment.courseId}>
                 <ListItem sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <ListItemText primary={enrollment.courseTitle} secondary={`Progress: ${progress.toFixed(2)}%`} />
+                  <ListItemText 
+                    primary={`Course ID: ${enrollment.courseId}`} 
+                    secondary={`Progress: ${progress.toFixed(2)}%`} 
+                  />
                   <Box sx={{ width: "50%", mr: 2 }}>
                     <LinearProgress variant="determinate" value={progress} />
                   </Box>

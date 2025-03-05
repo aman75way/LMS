@@ -16,9 +16,11 @@ export const createLecture = asyncHandler(async (req: Request, res: Response): P
     res.status(403).json({ message: "Only instructors can create lectures" });
     return ;
   }
+  const instructorId = req.user.id; 
+  const file = req.file;
 
   const { courseId, title, contentUrl, duration } = req.body;
-  const newLecture: LectureDTO = await createLectureService(req.user.id, courseId, title, contentUrl, duration);
+  const newLecture: LectureDTO = await createLectureService(instructorId, courseId, title, file, duration);
   res.status(201).json(newLecture);
 });
 

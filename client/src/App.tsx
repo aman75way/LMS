@@ -14,13 +14,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./store/store";
 import { useLoadingBar } from "react-top-loading-bar";
-// import { userUpdate } from "./store/slices/authSlice";
-import { fetchUser } from "./services/authService"; 
+import { fetchUser } from "./store/slices/authSlice"; //  Fetch user on app load
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
-  // const isLoading = useSelector((state: RootState) => state.auth.isLoading);
-  const isLoading = false;
+  const isLoading = useSelector((state: RootState) => state.auth.isLoading);
   const { start, complete } = useLoadingBar({ color: "#000000", height: 3 });
   const location = useLocation();
 
@@ -34,7 +32,7 @@ const App = () => {
   }, [location.pathname, start, complete]);
 
   useEffect(() => {
-    fetchUser(dispatch);
+    dispatch(fetchUser()); //  Fetch the user on app load
   }, [dispatch]);
 
   return (

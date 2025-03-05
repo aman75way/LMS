@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import { Box, Typography, Button, Grid, Card, CardContent } from "@mui/material";
+import { Box, Typography, Button, Grid, Card, CardContent, CircularProgress } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
-import { fetchCourseById } from "../store/slices/courseSlice";
+import { fetchCourse } from "../store/slices/courseSlice";
 import { fetchLectures } from "../store/slices/lectureSlice";
-import { enrollInCourse } from "../store/slices/enrollmentSlice";
-import { purchaseCourse, checkPurchase } from "../store/slices/purchaseSlice";
+import { enrollCourse } from "../store/slices/enrollmentSlice";
+import { initiatePurchase, getUserPurchases } from "../store/slices/purchaseSlice";
 import LecturePlayer from "../components/LecturePlayer";
-import CircularProgress from "@mui/material/CircularProgress";
 import { motion } from "motion/react";
 
 const CourseDetails = () => {
@@ -17,9 +16,9 @@ const CourseDetails = () => {
   const navigate = useNavigate();
 
   const user = useSelector((state: RootState) => state.auth.user);
-  const course = useSelector((state: RootState) => state.courses.selectedCourse);
+  const course = useSelector((state: RootState) => state.courses.courses.find((c) => c.id === id));
   const lectures = useSelector((state: RootState) => state.lectures.lectures);
-  const isPurchased = useSelector((state: RootState) => state.purchases.purchasedCourses.includes(id!));
+  const isPurchased = useSelector((state: RootState) => state.purchase.purchases.some((p) => p.courseId === id));
   const loading = useSelector((state: RootState) => state.courses.loading);
 
   const [buying, setBuying] = useState(false);
@@ -27,10 +26,10 @@ const CourseDetails = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchCourseById(id));
+      dispatch(fetchCourse(id));
       dispatch(fetchLectures(id));
       if (user) {
-        dispatch(checkPurchase(id));
+        dispatch(getUserPurchases());
       }
     }
   }, [dispatch, id, user]);
@@ -42,7 +41,7 @@ const CourseDetails = () => {
     }
     setBuying(true);
     try {
-      await dispatch(purchaseCourse({ courseId: id!, amount: course?.price })).unwrap();
+      await dispatch(initiatePurchase({ courseId: id!, amount: course?.price || 0 })).unwrap();
     } finally {
       setBuying(false);
     }
@@ -53,7 +52,7 @@ const CourseDetails = () => {
       navigate("/login");
       return;
     }
-    await dispatch(enrollInCourse(id!));
+    await dispatch(enrollCourse(id!));
   };
 
   return (
@@ -124,7 +123,7 @@ const CourseDetails = () => {
                   <b>Category:</b> {course?.category}
                 </Typography>
                 <Typography variant="body1">
-                  <b>Price:</b> ${course?.price.toFixed(2)}
+                  <b>Price:</b> ${course?.price?.toFixed(2)}
                 </Typography>
                 <Typography variant="body1">
                   <b>Instructor:</b> {course?.instructorId}

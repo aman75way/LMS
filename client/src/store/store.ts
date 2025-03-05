@@ -4,6 +4,7 @@ import courseReducer from "./slices/courseSlice";
 import enrollmentReducer from "./slices/enrollmentSlice";
 import lectureReducer from "./slices/lectureSlice";
 import progressReducer from "./slices/progressSlice";
+import purchaseReducer from "./slices/purchaseSlice"
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     enrollments: enrollmentReducer,
     lectures: lectureReducer,
     progress: progressReducer,
+    purchase : purchaseReducer  
   },
 });
 

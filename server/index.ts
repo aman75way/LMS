@@ -17,7 +17,11 @@ app.use(bodyParser.json());
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+app.use(cors({ 
+    origin: process.env.CLIENT_URL?.replace(/\/$/, "") || "http://localhost:5173", 
+    credentials: true 
+  }));
+  
 
 // Register the general error handler after all routes
 app.use(errorHandler);

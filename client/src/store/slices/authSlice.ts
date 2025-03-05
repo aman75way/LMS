@@ -1,37 +1,73 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../service/authService";
+import {store} from "../store"
 
-// API URL
 const API_URL = `${import.meta.env.VITE_API_URL}/auth`;
 
 // ---------------- Thunks ----------------
 
-export const signup = createAsyncThunk("auth/signup", async (userData, { rejectWithValue }) => {
-  try {
-    const response = await axios.post(`${API_URL}/signup`, userData);
-    return response.data;
-  } catch (error : any) {
-    return rejectWithValue(error.response?.data || "Signup failed");
-  }
-});
 
-export const login = createAsyncThunk("auth/login", async (userData, { rejectWithValue }) => {
-  try {
-    const response = await axios.post(`${API_URL}/login`, userData);
-    return response.data;
-  } catch (error : any) {
-    return rejectWithValue(error.response?.data || "Login failed");
+// Signup Thunk
+export const signup = createAsyncThunk<User, SignupData>(
+  "auth/signup",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${API_URL}/signup`, userData);
+      localStorage.setItem("accessToken", response.data.user.accessToken);
+      localStorage.setItem("refreshToken", response.data.user.refreshToken);
+      return response.data.user;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || "Signup failed");
+    }
   }
-});
+);
 
-export const refreshToken = createAsyncThunk("auth/refreshToken", async (_, { rejectWithValue }) => {
-  try {
-    const response = await axios.post(`${API_URL}/refresh-token`);
-    return response.data;
-  } catch (error : any) {
-    return rejectWithValue(error.response?.data || "Token refresh failed");
+// Login Thunk
+export const login = createAsyncThunk<User, { email: string; password: string }>(
+  "auth/login",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${API_URL}/login`, userData);
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      return response.data.user;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || "Login failed");
+    }
   }
-});
+);
+
+// Refresh Token Thunk
+export const refreshToken = createAsyncThunk<string>(
+  "auth/refreshToken",
+  async (_, { rejectWithValue }) => {
+    try {
+      const refreshToken = localStorage.getItem("refreshToken");
+      if (!refreshToken) throw new Error("No refresh token found");
+
+      const response = await axios.post(`${API_URL}/refresh-token`, { refreshToken });
+      localStorage.setItem("accessToken", response.data.accessToken);
+      return response.data.accessToken;
+    } catch (error: any) {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      return rejectWithValue(error.response?.data?.message || "Token refresh failed");
+    }
+  }
+);
+
+// Fetch Logged-In User Thunk
+export const fetchUser = createAsyncThunk<User>(
+  "auth/fetchUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${API_URL}/`);
+      return response.data.user;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || "Fetching user failed");
+    }
+  }
+);
 
 // ---------------- Initial State ----------------
 
@@ -47,44 +83,41 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       state.user = null;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(signup.pending, (state) => {
-        state.isLoading = true;
-      })
+      // Signup cases
+      .addCase(signup.pending, (state) => { state.isLoading = true; })
       .addCase(signup.fulfilled, (state, action) => {
         state.isLoading = false;
-        const { password, ...userWithoutPassword } = action.payload.user;
-        state.user = userWithoutPassword;
+        state.user = action.payload;
       })
-      .addCase(signup.rejected, (state) => {
-        state.isLoading = false;
-      })
+      .addCase(signup.rejected, (state) => { state.isLoading = false; })
 
-      .addCase(login.pending, (state) => {
-        state.isLoading = true;
-      })
+      // Login cases
+      .addCase(login.pending, (state) => { state.isLoading = true; })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
-        const { password, ...userWithoutPassword } = action.payload.user;
-        state.user = userWithoutPassword;
+        state.user = action.payload;
       })
-      .addCase(login.rejected, (state) => {
-        state.isLoading = false;
+      .addCase(login.rejected, (state) => { state.isLoading = false; })
+
+      // Refresh Token case
+      .addCase(refreshToken.fulfilled, (state, action) => {
+        localStorage.setItem("accessToken", action.payload);
       })
 
-      .addCase(refreshToken.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(refreshToken.fulfilled, (state, action) => {
+      // Fetch user case
+      .addCase(fetchUser.pending, (state) => { state.isLoading = true; })
+      .addCase(fetchUser.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.user = action.payload;
       })
-      .addCase(refreshToken.rejected, (state) => {
-        state.isLoading = false;
-      });
+      .addCase(fetchUser.rejected, (state) => { state.isLoading = false; });
   },
 });
 

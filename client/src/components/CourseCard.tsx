@@ -2,7 +2,7 @@ import { Box, Typography, Button } from "@mui/material";
 import { motion } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
-import { enrollInCourse } from "../store/slices/enrollmentSlice";
+import { enrollCourse } from "../store/slices/enrollmentSlice";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
     }
 
     setLoading(true);
-    dispatch(enrollInCourse(course.id))
+    dispatch(enrollCourse(course.id))
       .unwrap()
       .finally(() => setLoading(false));
   };
@@ -81,7 +81,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
           View Course
         </Button>
 
-        {user && user.role === "STUDENT" && (
+        {/* {user && user.role === "STUDENT" && (
           <Button
             variant="contained"
             sx={{
@@ -96,7 +96,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
           >
             {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Enroll Now"}
           </Button>
-        )}
+        )} */}
       </Box>
     </motion.div>
   );

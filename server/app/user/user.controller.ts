@@ -18,7 +18,7 @@ export const signup = asyncHandler(async (req: Request, res: Response): Promise<
  */
 export const login = asyncHandler(async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
-  const user: UserDTO = await loginService(email, password, res);
+  const user: Omit<UserDTO, "accessToken" | "refreshToken"> = await loginService(email, password, res);
   res.status(200).json(user);
 });
 
@@ -42,7 +42,7 @@ export const getUser = asyncHandler(async (req: Request, res: Response): Promise
     res.status(400).json({ message: "User ID is required" });
     return;
   }
-  const user: UserDTO = await getUserService(req.user.id);
+  const user: Omit<UserDTO, "accessToken" | "refreshToken"> = await getUserService(req.user.id);
   res.status(200).json(user);
 });
 
